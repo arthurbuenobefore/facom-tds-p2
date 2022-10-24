@@ -14,16 +14,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "fraquezas")
 public class Fraqueza {
-    private String nome;
-    private Long id;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Id
     @GeneratedValue
-    public Long getId() {
-        return id;
-    }
+    private Long id;
+    private String nome;
 }

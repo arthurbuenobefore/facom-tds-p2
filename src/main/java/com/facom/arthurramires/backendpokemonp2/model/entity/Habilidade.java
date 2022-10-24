@@ -17,20 +17,16 @@ import java.util.List;
 @Table(name = "habilidades")
 public class Habilidade {
     private String nome;
+    @Id
+    @GeneratedValue
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name="pokemon_id")
+    private Pokemon pokemon;
 
 //    @JsonBackReference
 //    @ManyToMany
 //    @JoinTable(name = "pokemon_habilidade", joinColumns = @JoinColumn(name = "habilidade_id"), inverseJoinColumns = @JoinColumn(name = "pokemon_id"))
 //    private List<Habilidade> habilidades;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
-    }
 }

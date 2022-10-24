@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,6 +17,9 @@ import java.util.List;
 @Entity
 @Table(name = "pokemons")
 public class Pokemon {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String nome;
 	private long altura;
 	private long peso;
@@ -24,6 +28,10 @@ public class Pokemon {
     private long ataque_especial;
     private long defesa_especial;
     private long velocidade;
+
+    @OneToMany(mappedBy = "pokemon")
+    private List<Habilidade> habilidades;
+
 
 //    @OneToMany
 //    @JoinColumn(name = "tipo_pokemon_id")
@@ -35,15 +43,4 @@ public class Pokemon {
 //    @JsonManagedReference
 //    @ManyToMany(mappedBy = "habilidades", fetch = FetchType.LAZY)
 //    private List<Habilidade> pokemons;
-    private Long id;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Id
-    @GeneratedValue
-    public Long getId() {
-        return id;
-    }
 }

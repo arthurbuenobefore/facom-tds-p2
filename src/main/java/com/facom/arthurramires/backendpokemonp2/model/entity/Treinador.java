@@ -15,20 +15,11 @@ import java.util.List;
 @Entity
 @Table(name = "treinadores")
 public class Treinador {
-    private String nome;
-	private long xp;
-    private Long id;
-
-//    @OneToMany
-//    private List<Pokebola> pokebolas;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Id
     @GeneratedValue
-    public Long getId() {
-        return id;
-    }
+    private Long id;
+    private String nome;
+	private long xp;
+//    @OneToMany
+//    private List<Pokebola> pokebolas;
 }

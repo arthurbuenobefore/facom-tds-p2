@@ -15,14 +15,6 @@ import java.util.List;
 @Entity
 @Table(name = "pokebolas")
 public class Pokebola {
-    private Long id;
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Id
     @GeneratedValue
-    public Long getId() {
-        return id;
-    }
-}
+    private Long id;}
