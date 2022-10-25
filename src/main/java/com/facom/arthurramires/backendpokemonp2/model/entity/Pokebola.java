@@ -17,4 +17,13 @@ import java.util.List;
 public class Pokebola {
     @Id
     @GeneratedValue
-    private Long id;}
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pokemon_id", referencedColumnName = "id")
+    private Pokemon pokemon;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "treinador_id")
+    private Treinador treinador;
+}

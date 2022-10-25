@@ -21,8 +21,8 @@ public class Habilidade {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="pokemon_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "pokemon_id")
     private Pokemon pokemon;
 
 //    @JsonBackReference

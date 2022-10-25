@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FraquezaDTO {
     private String nome;
+    private Long pokemon_id;
 }

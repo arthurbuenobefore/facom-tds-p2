@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
 @Setter
 @Getter
@@ -18,4 +19,5 @@ public class PokemonDTO {
     private long ataque_especial;
     private long defesa_especial;
     private long velocidade;
+    private List<Long> tipos;
 }

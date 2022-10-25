@@ -1,9 +1,14 @@
 package com.facom.arthurramires.backendpokemonp2.controller;
 import com.facom.arthurramires.backendpokemonp2.model.dto.PokemonDTO;
 import com.facom.arthurramires.backendpokemonp2.model.dto.TipoPokemonDTO;
+import com.facom.arthurramires.backendpokemonp2.model.entity.Fraqueza;
+import com.facom.arthurramires.backendpokemonp2.model.entity.Habilidade;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Pokemon;
 import com.facom.arthurramires.backendpokemonp2.model.entity.TipoPokemon;
+import com.facom.arthurramires.backendpokemonp2.model.repository.FraquezaRepository;
+import com.facom.arthurramires.backendpokemonp2.model.repository.HabilidadeRepository;
 import com.facom.arthurramires.backendpokemonp2.model.repository.PokemonRepository;
+import com.facom.arthurramires.backendpokemonp2.model.repository.TipoPokemonRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +23,15 @@ public class PokemonController {
     @Autowired
     PokemonRepository pokemonRepository;
 
+    @Autowired
+    TipoPokemonRepository tipoPokemonRepository;
+
+    @Autowired
+    HabilidadeRepository habilidadeRepository;
+
+    @Autowired
+    FraquezaRepository fraquezaRepository;
+
     @GetMapping
     public ResponseEntity<Object> getAllPokemon(){
         return ResponseEntity.status(HttpStatus.OK).body(pokemonRepository.findAll());
@@ -26,7 +40,19 @@ public class PokemonController {
     @PostMapping
     public ResponseEntity<Object> savePokemon(@RequestBody PokemonDTO pokemon){
         Pokemon pokemonEntity = new Pokemon();
+
+        for(Long tipoId: pokemon.getTipos()){
+            Optional<TipoPokemon> tipoExists = tipoPokemonRepository.findById(tipoId);
+
+            if(tipoExists.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo do pokemon não Encontrado");
+            }
+
+            //pokemonEntity.setTipos(tipoExists.get());
+        }
         BeanUtils.copyProperties(pokemon, pokemonEntity);
+
+
         return ResponseEntity.status(HttpStatus.OK).body(pokemonRepository.save(pokemonEntity));
     }
 

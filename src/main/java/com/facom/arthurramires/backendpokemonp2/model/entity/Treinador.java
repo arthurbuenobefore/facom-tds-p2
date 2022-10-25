@@ -20,6 +20,4 @@ public class Treinador {
     private Long id;
     private String nome;
 	private long xp;
-//    @OneToMany
-//    private List<Pokebola> pokebolas;
 }

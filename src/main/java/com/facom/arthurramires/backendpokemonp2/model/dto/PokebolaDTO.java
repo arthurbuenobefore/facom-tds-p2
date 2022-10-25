@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HabilidadeDTO {
-    private String nome;
-    private Long pokemon_id;
+public class PokebolaDTO {
+    private Long treinador_id;
 }

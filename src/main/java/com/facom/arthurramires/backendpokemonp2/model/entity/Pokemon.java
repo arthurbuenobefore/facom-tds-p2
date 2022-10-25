@@ -29,18 +29,10 @@ public class Pokemon {
     private long defesa_especial;
     private long velocidade;
 
-    @OneToMany(mappedBy = "pokemon")
-    private List<Habilidade> habilidades;
+    @OneToOne(mappedBy = "pokemon")
+    private Pokebola pokebola;
 
-
-//    @OneToMany
-//    @JoinColumn(name = "tipo_pokemon_id")
-//    private List<TipoPokemon> tipo;
-
-//    @OneToOne
-//    @JoinColumn(name = "pokebola_id")
-//    private Pokebola pokebola;
-//    @JsonManagedReference
-//    @ManyToMany(mappedBy = "habilidades", fetch = FetchType.LAZY)
-//    private List<Habilidade> pokemons;
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "pokemons", fetch = FetchType.LAZY)
+    private List<TipoPokemon> tipos;
 }

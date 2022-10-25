@@ -3,7 +3,10 @@ import com.facom.arthurramires.backendpokemonp2.model.dto.FraquezaDTO;
 import com.facom.arthurramires.backendpokemonp2.model.dto.HabilidadeDTO;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Fraqueza;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Habilidade;
+import com.facom.arthurramires.backendpokemonp2.model.entity.Pokemon;
+import com.facom.arthurramires.backendpokemonp2.model.entity.TipoPokemon;
 import com.facom.arthurramires.backendpokemonp2.model.repository.FraquezaRepository;
+import com.facom.arthurramires.backendpokemonp2.model.repository.PokemonRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,8 @@ public class FraquezaController {
     @Autowired
     FraquezaRepository fraquezaRepository;
 
+    @Autowired
+    PokemonRepository pokemonRepository;
     @GetMapping
     public ResponseEntity<Object> getAllFraqueza(){
         return ResponseEntity.status(HttpStatus.OK).body(fraquezaRepository.findAll());
@@ -25,7 +30,13 @@ public class FraquezaController {
 
     @PostMapping
     public ResponseEntity<Object> saveFraqueza(@RequestBody FraquezaDTO fraqueza){
+        Optional<Pokemon> pokemonExists = pokemonRepository.findById(fraqueza.getPokemon_id());
+
+        if(pokemonExists.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pokemon não Encontrado");
+        }
         Fraqueza fraquezaEntity = new Fraqueza();
+        fraquezaEntity.setPokemon(pokemonExists.get());
         BeanUtils.copyProperties(fraqueza, fraquezaEntity);
         return ResponseEntity.status(HttpStatus.OK).body(fraquezaRepository.save(fraquezaEntity));
     }
