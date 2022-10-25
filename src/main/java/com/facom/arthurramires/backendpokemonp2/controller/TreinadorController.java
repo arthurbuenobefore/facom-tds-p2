@@ -2,6 +2,7 @@ package com.facom.arthurramires.backendpokemonp2.controller;
 
 import com.facom.arthurramires.backendpokemonp2.model.dto.TreinadorDTO;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Treinador;
+import com.facom.arthurramires.backendpokemonp2.model.repository.PokebolaRepository;
 import com.facom.arthurramires.backendpokemonp2.model.repository.TreinadorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class TreinadorController {
 
     @Autowired
     TreinadorRepository treinadorRepository;
+
+    @Autowired
+    PokebolaRepository pokebolaRepository;
 
     @GetMapping
     public ResponseEntity<Object> getAllTreinadores(){
@@ -52,6 +56,7 @@ public class TreinadorController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Treinador não Encontrado");
         }
         treinadorRepository.deleteById(id);
+        //TODO: fazer o delete das pokebolas vinculadas a este treinador
         return ResponseEntity.status(HttpStatus.OK).body("Treinador deletado com sucesso!");
     }
 }

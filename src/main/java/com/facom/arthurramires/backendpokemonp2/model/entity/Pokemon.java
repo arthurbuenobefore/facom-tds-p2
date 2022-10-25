@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,6 +34,6 @@ public class Pokemon {
     private Pokebola pokebola;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "pokemons", fetch = FetchType.LAZY)
-    private List<TipoPokemon> tipos;
+    @ManyToMany(mappedBy = "pokemons", fetch = FetchType.EAGER)
+    private List<TipoPokemon> tipos = new ArrayList<TipoPokemon>();
 }

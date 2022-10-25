@@ -25,6 +25,10 @@ public class PokebolaController {
 
     @Autowired
     TreinadorRepository treinadorRepository;
+
+    @Autowired
+    PokemonRepository pokemonRepository;
+
     @GetMapping
     public ResponseEntity<Object> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(pokebolaRepository.findAll());
@@ -33,12 +37,18 @@ public class PokebolaController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody PokebolaDTO pokebola){
         Optional<Treinador> treinadorExists = treinadorRepository.findById(pokebola.getTreinador_id());
+        Optional<Pokemon> pokemonExists = pokemonRepository.findById(pokebola.getPokemon_id());
 
         if(treinadorExists.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Treinador não Encontrado");
         }
+
+        if(pokemonExists.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pokemon não Encontrado");
+        }
         Pokebola pokebolaEntity = new Pokebola();
         pokebolaEntity.setTreinador(treinadorExists.get());
+        pokebolaEntity.setPokemon(pokemonExists.get());
         BeanUtils.copyProperties(pokebola, pokebolaEntity);
         return ResponseEntity.status(HttpStatus.OK).body(pokebolaRepository.save(pokebolaEntity));
     }

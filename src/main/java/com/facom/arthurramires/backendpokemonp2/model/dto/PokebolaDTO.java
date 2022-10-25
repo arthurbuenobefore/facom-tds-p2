@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PokebolaDTO {
     private Long treinador_id;
+    private Long pokemon_id;
 }

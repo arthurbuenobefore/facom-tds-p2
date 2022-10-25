@@ -48,10 +48,9 @@ public class PokemonController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo do pokemon não Encontrado");
             }
 
-            //pokemonEntity.setTipos(tipoExists.get());
+            pokemonEntity.getTipos().add(tipoExists.get());
         }
         BeanUtils.copyProperties(pokemon, pokemonEntity);
-
 
         return ResponseEntity.status(HttpStatus.OK).body(pokemonRepository.save(pokemonEntity));
     }
