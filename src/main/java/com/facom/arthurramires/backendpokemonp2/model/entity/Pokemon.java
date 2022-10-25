@@ -34,6 +34,11 @@ public class Pokemon {
     private Pokebola pokebola;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "pokemons", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "pokemons", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<TipoPokemon> tipos = new ArrayList<TipoPokemon>();
+
+    public void addTipos(TipoPokemon tipo) {
+        tipos.add(tipo);
+        tipo.getPokemons().add(this);
+    }
 }

@@ -22,7 +22,7 @@ public class TipoPokemon {
     private String nome;
 
     @JsonBackReference
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "pokemon_tipo", joinColumns = @JoinColumn(name = "tipo_id"), inverseJoinColumns = @JoinColumn(name = "pokemon_id"))
     private List<Pokemon> pokemons;
 }
