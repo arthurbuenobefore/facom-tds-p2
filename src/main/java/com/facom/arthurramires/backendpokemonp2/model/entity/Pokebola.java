@@ -25,7 +25,7 @@ public class Pokebola {
     @JsonIgnore
     private Pokemon pokemon;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "treinador_id")
+    @ManyToOne
+    @JoinColumn(name="treinador_id")
     private Treinador treinador;
 }

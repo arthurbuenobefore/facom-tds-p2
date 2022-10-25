@@ -1,8 +1,5 @@
 package com.facom.arthurramires.backendpokemonp2.controller;
 import com.facom.arthurramires.backendpokemonp2.model.dto.PokemonDTO;
-import com.facom.arthurramires.backendpokemonp2.model.dto.TipoPokemonDTO;
-import com.facom.arthurramires.backendpokemonp2.model.entity.Fraqueza;
-import com.facom.arthurramires.backendpokemonp2.model.entity.Habilidade;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Pokemon;
 import com.facom.arthurramires.backendpokemonp2.model.entity.TipoPokemon;
 import com.facom.arthurramires.backendpokemonp2.model.repository.FraquezaRepository;
@@ -13,7 +10,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;

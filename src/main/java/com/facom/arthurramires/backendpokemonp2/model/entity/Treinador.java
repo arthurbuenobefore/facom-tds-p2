@@ -20,4 +20,12 @@ public class Treinador {
     private Long id;
     private String nome;
 	private long xp;
+
+    @OneToMany(mappedBy="treinador", cascade=CascadeType.ALL)
+    private List<Pokebola> pokebolas;
+
+    public void addPokebola(Pokebola pokebola) {
+        pokebola.setTreinador(this);
+        pokebolas.add(pokebola);
+    }
 }

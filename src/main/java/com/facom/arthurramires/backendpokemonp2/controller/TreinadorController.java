@@ -1,6 +1,9 @@
 package com.facom.arthurramires.backendpokemonp2.controller;
 
 import com.facom.arthurramires.backendpokemonp2.model.dto.TreinadorDTO;
+import com.facom.arthurramires.backendpokemonp2.model.entity.Pokebola;
+import com.facom.arthurramires.backendpokemonp2.model.entity.Pokemon;
+import com.facom.arthurramires.backendpokemonp2.model.entity.TipoPokemon;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Treinador;
 import com.facom.arthurramires.backendpokemonp2.model.repository.PokebolaRepository;
 import com.facom.arthurramires.backendpokemonp2.model.repository.TreinadorRepository;
@@ -31,6 +34,13 @@ public class TreinadorController {
     public ResponseEntity<Object> saveTreinador(@RequestBody TreinadorDTO treinadorBody){
         Treinador treinadorEntity = new Treinador();
         BeanUtils.copyProperties(treinadorBody, treinadorEntity);
+        if(treinadorBody.getPokebolas() != null){
+            for(Long pokeBolaId: treinadorBody.getPokebolas()){
+                Optional<Pokebola> pokeExists = pokebolaRepository.findById(pokeBolaId);
+
+                pokeExists.ifPresent(treinadorEntity::addPokebola);
+            }
+        }
         return ResponseEntity.status(HttpStatus.OK).body(treinadorRepository.save(treinadorEntity));
     }
 
@@ -44,6 +54,13 @@ public class TreinadorController {
 
         Treinador treinadorEntity = treinadorExists.get();
         BeanUtils.copyProperties(treinadorBody, treinadorEntity);
+
+        if(treinadorBody.getPokebolas() != null){
+            for(Long pokeBolaId: treinadorBody.getPokebolas()){
+                Optional<Pokebola> pokeExists = pokebolaRepository.findById(pokeBolaId);
+                pokeExists.ifPresent(treinadorEntity::addPokebola);
+            }
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body(treinadorRepository.save(treinadorEntity));
     }
