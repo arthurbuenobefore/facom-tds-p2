@@ -101,6 +101,17 @@ public class PokemonController {
         if(pokemonExists.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pokemon não Encontrado");
         }
+
+        List<TipoPokemon> pokemonTipos = pokemonExists.get().getTipos();
+
+        for(TipoPokemon tipo: pokemonTipos){
+            Optional<TipoPokemon> tipoExists = tipoPokemonRepository.findById(tipo.getId());
+
+            if(tipoExists.isPresent()){
+                tipoPokemonRepository.deleteById(tipo.getId());
+            }
+        }
+
         pokemonRepository.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Pokemon deletado com sucesso!");
     }
