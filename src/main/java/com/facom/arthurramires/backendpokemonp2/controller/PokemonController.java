@@ -1,11 +1,9 @@
 package com.facom.arthurramires.backendpokemonp2.controller;
 import com.facom.arthurramires.backendpokemonp2.model.dto.PokemonDTO;
+import com.facom.arthurramires.backendpokemonp2.model.entity.Pokebola;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Pokemon;
 import com.facom.arthurramires.backendpokemonp2.model.entity.TipoPokemon;
-import com.facom.arthurramires.backendpokemonp2.model.repository.FraquezaRepository;
-import com.facom.arthurramires.backendpokemonp2.model.repository.HabilidadeRepository;
-import com.facom.arthurramires.backendpokemonp2.model.repository.PokemonRepository;
-import com.facom.arthurramires.backendpokemonp2.model.repository.TipoPokemonRepository;
+import com.facom.arthurramires.backendpokemonp2.model.repository.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +26,9 @@ public class PokemonController {
 
     @Autowired
     FraquezaRepository fraquezaRepository;
+
+    @Autowired
+    PokebolaRepository pokebolaRepository;
 
     @GetMapping("/pokemon")
     public ResponseEntity<Object> getAllPokemon(){
@@ -77,6 +78,15 @@ public class PokemonController {
             pokemonEntity.addTipos(tipoExists.get());
         }
 
+        Long pokebolaId = pokemon.getPokebola_id();
+        Optional<Pokebola> pokebolaExists = pokebolaRepository.findById(pokebolaId);
+
+        if(pokebolaExists.isPresent()){
+            Pokebola pokebolaEntity = pokebolaExists.get();
+            pokebolaEntity.setPokemon(pokemonEntity);
+            pokebolaRepository.save(pokebolaEntity);
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(pokemonRepository.save(pokemonEntity));
     }
 
@@ -90,6 +100,25 @@ public class PokemonController {
 
         Pokemon pokemonEntity = pokemonExists.get();
         BeanUtils.copyProperties(pokemonBody, pokemonEntity);
+
+        for(Long tipoId: pokemonBody.getTipos()){
+            Optional<TipoPokemon> tipoExists = tipoPokemonRepository.findById(tipoId);
+
+            if(tipoExists.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo do pokemon não Encontrado");
+            }
+
+            pokemonEntity.addTipos(tipoExists.get());
+        }
+
+        Long pokebolaId = pokemonBody.getPokebola_id();
+        Optional<Pokebola> pokebolaExists = pokebolaRepository.findById(pokebolaId);
+
+        if(pokebolaExists.isPresent()){
+            Pokebola pokebolaEntity = pokebolaExists.get();
+            pokebolaEntity.setPokemon(pokemonEntity);
+            pokebolaRepository.save(pokebolaEntity);
+        }
 
         return ResponseEntity.status(HttpStatus.OK).body(pokemonRepository.save(pokemonEntity));
     }

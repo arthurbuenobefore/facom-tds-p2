@@ -34,14 +34,20 @@ public class TreinadorController {
     public ResponseEntity<Object> saveTreinador(@RequestBody TreinadorDTO treinadorBody){
         Treinador treinadorEntity = new Treinador();
         BeanUtils.copyProperties(treinadorBody, treinadorEntity);
-        if(treinadorBody.getPokebolas() != null){
-            for(Long pokeBolaId: treinadorBody.getPokebolas()){
-                Optional<Pokebola> pokeExists = pokebolaRepository.findById(pokeBolaId);
+//        if(treinadorBody.getPokebolas() != null){
+//            for(Long pokeBolaId: treinadorBody.getPokebolas()){
+//                Optional<Pokebola> pokeExists = pokebolaRepository.findById(pokeBolaId);
+//
+//                pokeExists.ifPresent(treinadorEntity::addPokebola);
+//            }
+//        }
+        Treinador treinadorInserido = treinadorRepository.save(treinadorEntity);
 
-                pokeExists.ifPresent(treinadorEntity::addPokebola);
-            }
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(treinadorRepository.save(treinadorEntity));
+        Pokebola pokebolaEntity = new Pokebola();
+        pokebolaEntity.setTreinador(treinadorInserido);
+        Pokebola pokebolaInserida = pokebolaRepository.save(pokebolaEntity);
+
+        return ResponseEntity.status(HttpStatus.OK).body(treinadorInserido);
     }
 
     @PutMapping("/{id}")
@@ -54,13 +60,6 @@ public class TreinadorController {
 
         Treinador treinadorEntity = treinadorExists.get();
         BeanUtils.copyProperties(treinadorBody, treinadorEntity);
-
-        if(treinadorBody.getPokebolas() != null){
-            for(Long pokeBolaId: treinadorBody.getPokebolas()){
-                Optional<Pokebola> pokeExists = pokebolaRepository.findById(pokeBolaId);
-                pokeExists.ifPresent(treinadorEntity::addPokebola);
-            }
-        }
 
         return ResponseEntity.status(HttpStatus.OK).body(treinadorRepository.save(treinadorEntity));
     }

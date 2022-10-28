@@ -14,5 +14,4 @@ import java.util.List;
 public class TreinadorDTO {
     private String nome;
     private long xp;
-    private List<Long> pokebolas;
 }

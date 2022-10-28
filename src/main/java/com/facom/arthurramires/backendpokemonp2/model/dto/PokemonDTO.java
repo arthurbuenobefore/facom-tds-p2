@@ -19,5 +19,6 @@ public class PokemonDTO {
     private long ataque_especial;
     private long defesa_especial;
     private long velocidade;
+    private long pokebola_id;
     private List<Long> tipos;
 }
