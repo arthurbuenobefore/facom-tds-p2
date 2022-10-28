@@ -64,6 +64,13 @@ public class PokemonController {
         return ResponseEntity.status(HttpStatus.OK).body(pokemon);
     }
 
+    @GetMapping("/pokemons/ranked")
+    public ResponseEntity<Object> getPokemonRanked(){
+        List<Pokemon> pokemons = pokemonRepository.findAllPokemonOrderByPokebolaIsNotNull();
+
+        return ResponseEntity.status(HttpStatus.OK).body(pokemons);
+    }
+
     @PostMapping("/pokemon")
     public ResponseEntity<Object> savePokemon(@RequestBody PokemonDTO pokemon){
         Pokemon pokemonEntity = new Pokemon();
