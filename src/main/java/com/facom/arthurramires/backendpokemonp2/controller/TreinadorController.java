@@ -6,6 +6,7 @@ import com.facom.arthurramires.backendpokemonp2.model.entity.Pokemon;
 import com.facom.arthurramires.backendpokemonp2.model.entity.TipoPokemon;
 import com.facom.arthurramires.backendpokemonp2.model.entity.Treinador;
 import com.facom.arthurramires.backendpokemonp2.model.repository.PokebolaRepository;
+import com.facom.arthurramires.backendpokemonp2.model.repository.PokemonRepository;
 import com.facom.arthurramires.backendpokemonp2.model.repository.TreinadorRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,6 +26,9 @@ public class TreinadorController {
 
     @Autowired
     PokebolaRepository pokebolaRepository;
+
+    @Autowired
+    PokemonRepository pokemonRepository;
 
     @GetMapping
     public ResponseEntity<Object> getAllTreinadores(){
@@ -71,8 +76,18 @@ public class TreinadorController {
         if(treinadorExists.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Treinador não Encontrado");
         }
+
+        List<Pokebola> pokebolas = pokebolaRepository.getPokebolaByTreinador(treinadorExists.get());
+
+        for(Pokebola poke: pokebolas){
+            if(poke.getPokemon() != null){
+                poke.setPokemon(null);
+                pokebolaRepository.save(poke);
+            }
+            pokebolaRepository.deleteById(poke.getId());
+        }
+
         treinadorRepository.deleteById(id);
-        //TODO: fazer o delete das pokebolas vinculadas a este treinador
         return ResponseEntity.status(HttpStatus.OK).body("Treinador deletado com sucesso!");
     }
 }
