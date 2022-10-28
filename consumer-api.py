@@ -2,14 +2,6 @@ import requests
 import json
 # https://stackoverflow.com/questions/6386308/http-requests-and-json-parsing-in-python
 
-print("Selecione qual módulo deseja testar da API: \n")
-print("1 - Treinador: \n")
-print("2 - Tipo do Pokemon: \n")
-print("3 - Pokemon: \n")
-print("4 - Fraqueza: \n")
-print("5 - Habilidade: \n")
-opcao = input()
-
 def moduloTreinador():
     #GET TREINADOR
     url = 'http://localhost:8080/api/treinador'
@@ -28,6 +20,7 @@ def moduloTreinador():
     )
 
     resp = requests.post(url=url, json=params)
+    requests.post(url=url, json=params)
     data = resp.json()
     print("POST TReinador: \n")
     print(data)
@@ -40,7 +33,7 @@ def moduloTreinador():
         xp=2000
     )
 
-    #resp = requests.put(url=url, json=params)
+    resp = requests.put(url=url, json=params)
     data = resp.json()
     print("PUT TReinador: \n")
     print(data)
@@ -48,7 +41,7 @@ def moduloTreinador():
     #DELETE TREINADOR
     url = 'http://localhost:8080/api/treinador/1'
 
-    #resp = requests.delete(url=url)
+    resp = requests.delete(url=url)
     print("DELETE TReinador: \n")
     print(resp)
 
@@ -68,11 +61,12 @@ def moduloTipoPokemon():
     )
 
     resp = requests.post(url=url, json=params)
+    requests.post(url=url, json=params)
     data = resp.json()
     print("POST tipo-pokemon: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/tipo-pokemon/2'
+    url = 'http://localhost:8080/api/tipo-pokemon/3'
 
     params = dict(
         nome='Fogo',
@@ -83,11 +77,11 @@ def moduloTipoPokemon():
     print("PUT tipo-pokemon: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/tipo-pokemon/2'
+    url = 'http://localhost:8080/api/tipo-pokemon/3'
 
-    #resp = requests.delete(url=url)
+    resp = requests.delete(url=url)
     print("DELETE tipo-pokemon: \n")
-   # print(resp)
+    print(resp)
 
 def moduloPokemon():
     url = 'http://localhost:8080/api/pokemon'
@@ -97,22 +91,15 @@ def moduloPokemon():
     print("GET pokemon: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/pokemons?tipo=2'
+    url = 'http://localhost:8080/api/pokemons?tipo=4'
 
     resp = requests.get(url=url)
     data = resp.json()
     print("GET pokemons por tipo: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/pokemon/3'
-
-    resp = requests.get(url=url)
-    data = resp.json()
-    print("GET pokemons por ID: \n")
-    print(data)
-
     url = 'http://localhost:8080/api/pokemon'
-    tipos = [1]
+    tipos = [4]
     params = dict(
         nome='Snorlax',
         altura=192,
@@ -125,13 +112,21 @@ def moduloPokemon():
     )
 
     resp = requests.post(url=url, json=params)
+    requests.post(url=url, json=params)
     data = resp.json()
     print("POST pokemon: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/pokemon/3'
+    url = 'http://localhost:8080/api/pokemon/5'
 
-    tipos = [1]
+    resp = requests.get(url=url)
+    data = resp.json()
+    print("GET pokemons por ID: \n")
+    print(data)
+
+    url = 'http://localhost:8080/api/pokemon/5'
+
+    tipos = [4]
     params = dict(
         nome='Snorlax Teste',
         altura=192,
@@ -148,7 +143,7 @@ def moduloPokemon():
     print("PUT pokemon: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/pokemon/3'
+    url = 'http://localhost:8080/api/pokemon/5'
 
     resp = requests.delete(url=url)
     print("DELETE okemon: \n")
@@ -166,7 +161,7 @@ def moduloFraqueza():
 
     params = dict(
         nome='Gelo',
-        pokemon_id=20
+        pokemon_id=6
     )
 
     resp = requests.post(url=url, json=params)
@@ -174,11 +169,11 @@ def moduloFraqueza():
     print("POST fraqueza: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/fraqueza/4'
+    url = 'http://localhost:8080/api/fraqueza/7'
 
     params = dict(
         nome='Fogo',
-        pokemon_id=20
+        pokemon_id=6
     )
 
     resp = requests.put(url=url, json=params)
@@ -186,7 +181,7 @@ def moduloFraqueza():
     print("PUT fraqueza: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/fraqueza/4'
+    url = 'http://localhost:8080/api/fraqueza/7'
 
     resp = requests.delete(url=url)
     print("DELETE fraqueza: \n")
@@ -204,7 +199,7 @@ def moduloHabilidade():
 
     params = dict(
         nome='Gelo',
-        pokemon_id=20
+        pokemon_id=6
     )
 
     resp = requests.post(url=url, json=params)
@@ -212,11 +207,11 @@ def moduloHabilidade():
     print("POST habilidade: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/habilidade/5'
+    url = 'http://localhost:8080/api/habilidade/8'
 
     params = dict(
         nome='Fogo',
-        pokemon_id=20
+        pokemon_id=6
     )
 
     resp = requests.put(url=url, json=params)
@@ -224,20 +219,33 @@ def moduloHabilidade():
     print("PUT habilidade: \n")
     print(data)
 
-    url = 'http://localhost:8080/api/habilidade/5'
+    url = 'http://localhost:8080/api/habilidade/8'
 
     resp = requests.delete(url=url)
     print("DELETE habilidade: \n")
     print(resp)
 
 
-if(opcao == '1'):
-    moduloTreinador()
-elif(opcao == '2'):
-    moduloTipoPokemon()
-elif(opcao == '3'):
-    moduloPokemon()
-elif(opcao == '4'):
-    moduloFraqueza()
-else:
-    moduloHabilidade()
+
+while True:
+    print("Selecione qual módulo deseja testar da API: \n")
+    print("1 - Treinador: \n")
+    print("2 - Tipo do Pokemon: \n")
+    print("3 - Pokemon: \n")
+    print("4 - Fraqueza: \n")
+    print("5 - Habilidade: \n")
+    print("0 - Sair: \n")
+    opcao = input()
+
+    if(opcao == '1'):
+        moduloTreinador()
+    elif(opcao == '2'):
+        moduloTipoPokemon()
+    elif(opcao == '3'):
+        moduloPokemon()
+    elif(opcao == '4'):
+        moduloFraqueza()
+    elif(opcao == '5'):
+        moduloHabilidade()
+    else:
+        break
